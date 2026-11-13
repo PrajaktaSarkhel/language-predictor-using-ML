@@ -201,7 +201,7 @@
               <span>Multinomial Naive Bayes</span>
               <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">BASELINE</span>
             </div>
-            <div class="metric-stat">98.05%</div>
+            <div class="metric-stat">98.18%</div>
             <div class="metric-desc">Probabilistic bag-of-ngrams with Laplace smoothing (α=0.1)</div>
           </div>
         </div>
@@ -215,8 +215,7 @@
                 <th>Test Accuracy</th>
                 <th>Macro Precision</th>
                 <th>Macro Recall</th>
-                <th>Macro F1</th>
-                <th>3-Fold CV Mean</th>
+                <th>Macro F1-Score</th>
                 <th>Training Time</th>
                 <th>Inference Latency</th>
               </tr>
@@ -225,11 +224,10 @@
               {% for name, stats in comparison.items() %}
               <tr>
                 <td><strong>{{ name }}</strong> {% if name == 'Logistic Regression' %}<span class="badge-best">Selected</span>{% endif %}</td>
-                <td>{{ (stats.accuracy * 100)|round(2) }}%</td>
-                <td>{{ (stats.macro_precision * 100)|round(2) }}%</td>
-                <td>{{ (stats.macro_recall * 100)|round(2) }}%</td>
-                <td>{{ (stats.macro_f1 * 100)|round(2) }}%</td>
-                <td>{{ (stats.cv_accuracy_mean * 100)|round(2) }}%</td>
+                <td>{{ ((stats.accuracy or 0) * 100)|round(2) }}%</td>
+                <td>{{ ((stats.macro_precision or 0) * 100)|round(2) }}%</td>
+                <td>{{ ((stats.macro_recall or 0) * 100)|round(2) }}%</td>
+                <td>{{ ((stats.macro_f1 or 0) * 100)|round(2) }}%</td>
                 <td>{{ stats.train_time_sec }}s</td>
                 <td>{{ stats.inference_time_sec }}s</td>
               </tr>
@@ -240,7 +238,7 @@
 
         <h3 style="margin: 30px 0 12px; font-size: 1.15rem;">Multi-Class Confusion Matrix Heatmap</h3>
         <p style="color: var(--text-muted); font-size: 0.9rem;">
-          Evaluating predictions across 4,400 held-out test samples demonstrates strong diagonal density with near-zero cross-lingual leakage.
+          Evaluating predictions across 6,420 held-out test samples demonstrates strong diagonal density with near-zero cross-lingual leakage.
         </p>
         <div class="image-container">
           <img src="{{ url_for('static', filename='confusion_matrix.png') }}" alt="Language Detection Confusion Matrix">
