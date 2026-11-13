@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Language Detection System | NLP & Machine Learning</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌐</text></svg>">
+</head>
+<body>
+
+  <!-- Hero Header -->
+  <header class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span>🤖 Final Semester Project (FSP)</span> • <span>NLP & Machine Learning</span>
+      </div>
+      <h1>Multilingual Language Detection</h1>
+      <p>
+        An end-to-end text classification system leveraging character n-gram TF-IDF vectorization 
+        and multi-class Logistic Regression across 22+ world languages.
+      </p>
+
+      <div class="badges-row">
+        <span class="tech-tag">⚡ Python 3.13</span>
+        <span class="tech-tag">🧠 scikit-learn</span>
+        <span class="tech-tag">📈 Logistic Regression (98.66% Accuracy)</span>
+        <span class="tech-tag">🔤 TF-IDF (Char n-grams 1-3)</span>
+        <span class="tech-tag">🌐 Flask REST API</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="container">
+
+    <!-- Navigation Tabs -->
+    <nav class="tabs-nav">
+      <button class="tab-btn active" data-tab="tab-detect">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <span>Live Detector</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-metrics">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        <span>Model Benchmarks</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-languages">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span>Supported Languages ({{ languages|length }})</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-api">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+        <span>API Docs</span>
+      </button>
+    </nav>
+
+    <!-- Tab 1: Live Detector -->
+    <div id="tab-detect" class="tab-panel active">
+      <div class="detector-grid">
+
+        <!-- Input Column -->
+        <div class="card">
+          <div class="card-title">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+            <span>Input Text</span>
+          </div>
+
+          <div class="input-wrapper">
+            <textarea 
+              id="textInput" 
+              class="text-input" 
+              placeholder="Type or paste text in any language here... (e.g. English, French, Spanish, Hindi, Russian, Arabic, Japanese, etc.)"
+            ></textarea>
+            <div class="input-footer">
+              <span id="charCount">0 chars</span>
+              <span id="wordCount">0 words</span>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button id="detectBtn" class="btn btn-primary">
+              <span>Detect Language</span>
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+            <button id="clearBtn" class="btn btn-secondary">Clear</button>
+          </div>
+
+          <!-- Quick Test Presets -->
+          <div class="samples-section">
+            <div class="samples-label">Quick Test Sample Presets:</div>
+            <div class="samples-chips">
+              <button class="chip" data-sample="Artificial intelligence and machine learning are revolutionizing software development worldwide.">🇬🇧 English</button>
+              <button class="chip" data-sample="Bonjour tout le monde! C'est un plaisir de vous rencontrer aujourd'hui dans ce projet.">🇫🇷 French</button>
+              <button class="chip" data-sample="Hola, este es un sistema inteligente de procesamiento de lenguaje natural en tiempo real.">🇪🇸 Spanish</button>
+              <button class="chip" data-sample="Hallo, das maschinelle Lernen und die künstliche Intelligenz bieten erstaunliche Möglichkeiten.">🇩🇪 German</button>
+              <button class="chip" data-sample="नमस्ते दोस्तों, प्राकृतिक भाषा प्रसंस्करण तकनीक कंप्यूटर को मानवीय भाषा समझने की शक्ति देती है।">🇮🇳 Hindi</button>
+              <button class="chip" data-sample="Привет мир! Машинное обучение и искусственный интеллект меняют наш мир к лучшему.">🇷🇺 Russian</button>
+              <button class="chip" data-sample="مرحبا بكم في هذا المشروع المتطور للتعرف التلقائي على اللغات الطبيعية.">🇸🇦 Arabic</button>
+              <button class="chip" data-sample="こんにちは、機械学習による高精度な言語判定システムをテストしています。">🇯🇵 Japanese</button>
+              <button class="chip" data-sample="வணக்கம், இயற்கை மொழி செயலாக்கம் கணினிகளுக்கு மனித மொழியைப் புரிந்துகொள்ள உதவுகிறது.">🇮🇳 Tamil</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Result Column -->
+        <div class="card">
+          <div class="card-title">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>Prediction Result</span>
+          </div>
+
+          <!-- Initial Empty State -->
+          <div id="resultPlaceholder" class="result-placeholder">
+            <div class="placeholder-icon">🌐</div>
+            <p>Enter text on the left or select a sample preset to detect its language in real time.</p>
+          </div>
+
+          <!-- Active Result Card -->
+          <div id="resultCard" class="result-card">
+            
+            <div class="primary-result">
+              <div class="lang-header">
+                <div id="flagEmoji" class="flag-emoji">🌐</div>
+                <div class="lang-names">
+                  <h3 id="langTitle">English</h3>
+                  <div class="native-name">
+                    <span id="nativeName">English</span>
+                    <span id="langCode" class="badge-code">EN</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="confidence-bar-wrapper">
+                <div class="confidence-label-row">
+                  <span>Model Confidence</span>
+                  <span id="confidencePercent">98.5%</span>
+                </div>
+                <div class="progress-track">
+                  <div id="progressFill" class="progress-fill"></div>
+                </div>
+              </div>
+
+              <div class="metadata-grid">
+                <div class="meta-box">
+                  <div class="meta-label">Language Family</div>
+                  <div id="langFamily" class="meta-value">Indo-European</div>
+                </div>
+                <div class="meta-box">
+                  <div class="meta-label">Writing System</div>
+                  <div id="langScript" class="meta-value">Latin</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Top Probabilities Breakdown -->
+            <div class="distribution-title">Candidate Probability Breakdown:</div>
+            <div id="distributionList" class="distribution-list">
+              <!-- Dynamically populated -->
+            </div>
+
+            <!-- Cleaned Text Debug Info -->
+            <div class="cleaned-preview">
+              <div class="cleaned-preview-title">Cleaned & Normalized NLP Representation:</div>
+              <div id="cleanedTextPreview" class="cleaned-preview-text">...</div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Tab 2: Model Benchmarks -->
+    <div id="tab-metrics" class="tab-panel">
+      <div class="card">
+        <div class="card-title">🏆 Model Architecture & Performance Comparison</div>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">
+          As part of the NLP modeling methodology, three distinct multi-class classifiers were trained and evaluated 
+          on identical stratified splits using 50,000 sublinear TF-IDF character n-gram features.
+        </p>
+
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-header">
+              <span>Logistic Regression</span>
+              <span class="badge-best">PRIMARY</span>
+            </div>
+            <div class="metric-stat">98.66%</div>
+            <div class="metric-desc">Test Set Accuracy • 98.68% Macro F1 • 98.64% 3-Fold Cross-Validation</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-header">
+              <span>Linear Support Vector</span>
+              <span class="badge-best">CALIBRATED</span>
+            </div>
+            <div class="metric-stat">98.73%</div>
+            <div class="metric-desc">High-dimensional hyper-plane separator with isotonic calibration</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-header">
+              <span>Multinomial Naive Bayes</span>
+              <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">BASELINE</span>
+            </div>
+            <div class="metric-stat">98.05%</div>
+            <div class="metric-desc">Probabilistic bag-of-ngrams with Laplace smoothing (α=0.1)</div>
+          </div>
+        </div>
+
+        <h3 style="margin: 24px 0 12px; font-size: 1.15rem;">Detailed Comparison Matrix</h3>
+        <div style="overflow-x: auto;">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Model Architecture</th>
+                <th>Test Accuracy</th>
+                <th>Macro Precision</th>
+                <th>Macro Recall</th>
+                <th>Macro F1</th>
+                <th>3-Fold CV Mean</th>
+                <th>Training Time</th>
+                <th>Inference Latency</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for name, stats in comparison.items() %}
+              <tr>
+                <td><strong>{{ name }}</strong> {% if name == 'Logistic Regression' %}<span class="badge-best">Selected</span>{% endif %}</td>
+                <td>{{ (stats.accuracy * 100)|round(2) }}%</td>
+                <td>{{ (stats.macro_precision * 100)|round(2) }}%</td>
+                <td>{{ (stats.macro_recall * 100)|round(2) }}%</td>
+                <td>{{ (stats.macro_f1 * 100)|round(2) }}%</td>
+                <td>{{ (stats.cv_accuracy_mean * 100)|round(2) }}%</td>
+                <td>{{ stats.train_time_sec }}s</td>
+                <td>{{ stats.inference_time_sec }}s</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <h3 style="margin: 30px 0 12px; font-size: 1.15rem;">Multi-Class Confusion Matrix Heatmap</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">
+          Evaluating predictions across 4,400 held-out test samples demonstrates strong diagonal density with near-zero cross-lingual leakage.
+        </p>
+        <div class="image-container">
+          <img src="{{ url_for('static', filename='confusion_matrix.png') }}" alt="Language Detection Confusion Matrix">
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 3: Supported Languages Directory -->
+    <div id="tab-languages" class="tab-panel">
+      <div class="card">
+        <div class="card-title">🌍 Supported Languages Directory</div>
+        <p style="color: var(--text-muted); margin-bottom: 16px;">
+          The system currently supports {{ languages|length }} global languages spanning Latin, Cyrillic, Perso-Arabic, 
+          Devanagari, Dravidian, East Asian, and Southeast Asian writing scripts.
+        </p>
+
+        <div class="languages-grid">
+          {% for lang in languages %}
+            {% set meta = metadata.get(lang, {}) %}
+            <div class="lang-chip-card">
+              <div class="lang-chip-flag">{{ meta.flag or '🌐' }}</div>
+              <div>
+                <div class="lang-chip-name">{{ lang }} <span class="badge-code">{{ (meta.code or 'und')|upper }}</span></div>
+                <div class="lang-chip-native">{{ meta.native or lang }}</div>
+                <div class="lang-chip-family">{{ meta.family or 'Unknown' }}</div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 4: API Docs -->
+    <div id="tab-api" class="tab-panel">
+      <div class="card">
+        <div class="card-title">⚡ REST API Integration Guide</div>
+        <p style="color: var(--text-muted);">
+          Integrate real-time language detection into your downstream microservices, web apps, or pipelines using JSON HTTP endpoints.
+        </p>
+
+        <h4 style="margin-top: 20px;">1. Detect Language Endpoint</h4>
+        <p style="font-size: 0.9rem; margin-top: 4px;"><code>POST /api/predict</code></p>
+        
+        <div class="code-block">curl -X POST http://localhost:5000/api/predict \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Bonjour, comment allez-vous aujourd hui?", "top_k": 3}'</div>
+
+        <h4 style="margin-top: 20px;">Sample JSON Response</h4>
+        <div class="code-block">{
+  "success": true,
+  "predicted_language": "French",
+  "confidence": 98.74,
+  "code": "fr",
+  "native": "Français",
+  "flag": "🇫🇷",
+  "family": "Indo-European (Romance)",
+  "script": "Latin",
+  "top_predictions": [
+    {
+      "language": "French",
+      "confidence_percent": 98.74,
+      "native": "Français",
+      "flag": "🇫🇷"
+    },
+    {
+      "language": "Spanish",
+      "confidence_percent": 0.82,
+      "native": "Español",
+      "flag": "🇪🇸"
+    }
+  ]
+}</div>
+
+        <h4 style="margin-top: 20px;">2. Python Integration Example</h4>
+        <div class="code-block">import requests
+
+url = "http://localhost:5000/api/predict"
+payload = {"text": "नमस्ते, आप कैसे हैं?"}
+response = requests.post(url, json=payload)
+data = response.json()
+
+print(f"Detected: {data['predicted_language']} ({data['confidence']}%) {data['flag']}")</div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>Language Detection Project for FSP (Final Semester Project) • Built with Python, scikit-learn, and Flask</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

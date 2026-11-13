@@ -1,0 +1,240 @@
+{
+  "selected_model": "Logistic Regression",
+  "supported_languages": [
+    "Arabic",
+    "Chinese",
+    "Danish",
+    "Dutch",
+    "English",
+    "Estonian",
+    "French",
+    "German",
+    "Greek",
+    "Hindi",
+    "Indonesian",
+    "Italian",
+    "Japanese",
+    "Kannada",
+    "Korean",
+    "Latin",
+    "Malayalam",
+    "Persian",
+    "Portuguese",
+    "Pushto",
+    "Romanian",
+    "Russian",
+    "Spanish",
+    "Swedish",
+    "Tamil",
+    "Thai",
+    "Turkish",
+    "Urdu"
+  ],
+  "num_languages": 28,
+  "total_samples": 32098,
+  "train_samples": 25678,
+  "test_samples": 6420,
+  "model_comparison": {
+    "Multinomial Naive Bayes": {
+      "accuracy": 0.9818,
+      "macro_precision": 0.9896,
+      "macro_recall": 0.979,
+      "macro_f1": 0.9839,
+      "train_time_sec": 43.49,
+      "inference_time_sec": 7.8897
+    },
+    "Linear Support Vector (LinearSVC)": {
+      "accuracy": 0.9858,
+      "macro_precision": 0.9894,
+      "macro_recall": 0.984,
+      "macro_f1": 0.9865,
+      "train_time_sec": 53.55,
+      "inference_time_sec": 7.3933
+    },
+    "Logistic Regression": {
+      "accuracy": 0.985,
+      "macro_precision": 0.9888,
+      "macro_recall": 0.9828,
+      "macro_f1": 0.9856,
+      "train_time_sec": 168.35,
+      "inference_time_sec": 7.5047
+    }
+  },
+  "best_model_metrics": {
+    "accuracy": 0.985,
+    "macro_precision": 0.9888,
+    "macro_recall": 0.9828,
+    "macro_f1": 0.9856
+  },
+  "per_language_metrics": {
+    "Arabic": {
+      "precision": 0.9935,
+      "recall": 1.0,
+      "f1-score": 0.9967,
+      "support": 306.0
+    },
+    "Chinese": {
+      "precision": 0.9949,
+      "recall": 0.98,
+      "f1-score": 0.9874,
+      "support": 200.0
+    },
+    "Danish": {
+      "precision": 0.9877,
+      "recall": 0.9524,
+      "f1-score": 0.9697,
+      "support": 84.0
+    },
+    "Dutch": {
+      "precision": 1.0,
+      "recall": 0.987,
+      "f1-score": 0.9934,
+      "support": 307.0
+    },
+    "English": {
+      "precision": 0.903,
+      "recall": 0.9979,
+      "f1-score": 0.9481,
+      "support": 476.0
+    },
+    "Estonian": {
+      "precision": 0.9947,
+      "recall": 0.94,
+      "f1-score": 0.9666,
+      "support": 200.0
+    },
+    "French": {
+      "precision": 0.9777,
+      "recall": 0.9875,
+      "f1-score": 0.9825,
+      "support": 399.0
+    },
+    "German": {
+      "precision": 0.957,
+      "recall": 0.9674,
+      "f1-score": 0.9622,
+      "support": 92.0
+    },
+    "Greek": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 71.0
+    },
+    "Hindi": {
+      "precision": 1.0,
+      "recall": 0.981,
+      "f1-score": 0.9904,
+      "support": 210.0
+    },
+    "Indonesian": {
+      "precision": 1.0,
+      "recall": 0.9744,
+      "f1-score": 0.987,
+      "support": 195.0
+    },
+    "Italian": {
+      "precision": 0.9504,
+      "recall": 0.971,
+      "f1-score": 0.9606,
+      "support": 138.0
+    },
+    "Japanese": {
+      "precision": 1.0,
+      "recall": 0.97,
+      "f1-score": 0.9848,
+      "support": 200.0
+    },
+    "Kannada": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 73.0
+    },
+    "Korean": {
+      "precision": 1.0,
+      "recall": 0.995,
+      "f1-score": 0.9975,
+      "support": 200.0
+    },
+    "Latin": {
+      "precision": 0.9679,
+      "recall": 0.9476,
+      "f1-score": 0.9577,
+      "support": 191.0
+    },
+    "Malayalam": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 118.0
+    },
+    "Persian": {
+      "precision": 1.0,
+      "recall": 0.995,
+      "f1-score": 0.9975,
+      "support": 200.0
+    },
+    "Portuguese": {
+      "precision": 0.9971,
+      "recall": 0.9885,
+      "f1-score": 0.9928,
+      "support": 347.0
+    },
+    "Pushto": {
+      "precision": 1.0,
+      "recall": 0.9397,
+      "f1-score": 0.9689,
+      "support": 199.0
+    },
+    "Romanian": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 200.0
+    },
+    "Russian": {
+      "precision": 0.9912,
+      "recall": 0.997,
+      "f1-score": 0.9941,
+      "support": 337.0
+    },
+    "Spanish": {
+      "precision": 0.9834,
+      "recall": 0.9807,
+      "f1-score": 0.982,
+      "support": 362.0
+    },
+    "Swedish": {
+      "precision": 0.991,
+      "recall": 0.997,
+      "f1-score": 0.994,
+      "support": 332.0
+    },
+    "Tamil": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 289.0
+    },
+    "Thai": {
+      "precision": 1.0,
+      "recall": 0.99,
+      "f1-score": 0.995,
+      "support": 200.0
+    },
+    "Turkish": {
+      "precision": 0.9966,
+      "recall": 0.9898,
+      "f1-score": 0.9932,
+      "support": 294.0
+    },
+    "Urdu": {
+      "precision": 1.0,
+      "recall": 0.99,
+      "f1-score": 0.995,
+      "support": 200.0
+    }
+  },
+  "created_at": "2026-11-13 23:20:29"
+}

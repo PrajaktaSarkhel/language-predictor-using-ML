@@ -1,0 +1,16 @@
+# Core Machine Learning & NLP
+scikit-learn>=1.4.0
+pandas>=2.2.0
+numpy>=1.26.0
+nltk>=3.8.1
+joblib>=1.3.2
+
+# Visualization & Evaluation
+matplotlib>=3.8.0
+seaborn>=0.13.0
+
+# Web Application & API
+flask>=3.0.0
+
+# Interactive Notebook
+ipykernel>=6.29.0
