@@ -1,335 +1,531 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Language Detection System | NLP & Machine Learning</title>
+  <title>LinguaScan • Multilingual NLP Language Detection Studio</title>
+  <meta name="description" content="Production-grade multilingual language detection system powered by character n-gram TF-IDF and multi-class Logistic Regression across 28 global languages.">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌐</text></svg>">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌐</text></svg>">
 </head>
+
 <body>
 
-  <!-- Hero Header -->
-  <header class="hero">
-    <div class="hero-content">
-      <div class="hero-badge">
-        <span>🤖 Final Semester Project (FSP)</span> • <span>NLP & Machine Learning</span>
+  <!-- Top Studio Navigation Bar -->
+  <nav class="studio-nav" aria-label="Main Navigation">
+    <div class="studio-nav-inner">
+      <a href="/" class="brand-identity" aria-label="LinguaScan Home">
+        <div class="brand-logo-glyph" aria-hidden="true">LS</div>
+        <div class="brand-text-block">
+          <div class="brand-title">
+            <span>LinguaScan</span>
+            <span class="brand-version">NLP Studio</span>
+          </div>
+          <span class="brand-subtitle">Multilingual Text Classification</span>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <div class="status-badge" title="Trained and verified on 32,000+ balanced multilingual samples">
+          <span class="status-indicator-dot" aria-hidden="true"></span>
+          <span>28 Languages • 98.66% Acc</span>
+        </div>
+
+        <!-- Theme Toggle Button -->
+        <button id="themeToggleBtn" class="icon-btn" aria-label="Toggle dark mode" title="Switch between dark and light theme">
+          <svg id="themeIconSun" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none;"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg id="themeIconMoon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        </button>
+
+        <!-- GitHub Repository Link -->
+        <a href="https://github.com/PrajaktaSarkhel/language-predictor-using-ML" target="_blank" rel="noopener noreferrer" class="icon-btn" aria-label="GitHub Repository" title="GitHub Repository">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        </a>
       </div>
-      <h1>Multilingual Language Detection</h1>
+    </div>
+  </nav>
+
+  <!-- Hero Intro Strip -->
+  <header class="hero-strip">
+    <div class="hero-strip-inner">
+      <h1>Multilingual Language Detection System</h1>
       <p>
-        An end-to-end text classification system leveraging character n-gram TF-IDF vectorization 
-        and multi-class Logistic Regression across 22+ world languages.
+        An enterprise NLP classification engine utilizing character n-gram (1–4) sublinear TF-IDF vectorization 
+        and multi-class Logistic Regression for instant cross-lingual identification and confidence scoring.
       </p>
 
-      <div class="badges-row">
-        <span class="tech-tag">⚡ Python 3.13</span>
-        <span class="tech-tag">🧠 scikit-learn</span>
-        <span class="tech-tag">📈 Logistic Regression (98.66% Accuracy)</span>
-        <span class="tech-tag">🔤 TF-IDF (Char n-grams 1-3)</span>
-        <span class="tech-tag">🌐 Flask REST API</span>
+      <div class="spec-meta-row">
+        <span class="spec-chip">🧠 <strong>Model:</strong> Logistic Regression (C=5.0)</span>
+        <span class="spec-chip">🔤 <strong>Features:</strong> 50,000 Char n-grams</span>
+        <span class="spec-chip">📊 <strong>Accuracy:</strong> 98.66% Test Split</span>
+        <span class="spec-chip">⚡ <strong>Latency:</strong> &lt; 8 ms</span>
       </div>
     </div>
   </header>
 
-  <!-- Main Content Container -->
-  <main class="container">
+  <!-- Main Workstation Layout -->
+  <main class="main-wrapper">
 
-    <!-- Navigation Tabs -->
-    <nav class="tabs-nav">
-      <button class="tab-btn active" data-tab="tab-detect">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+    <!-- Segmented Navigation Tabs -->
+    <nav class="segmented-nav" role="tablist" aria-label="Studio Sections">
+      <button class="segment-btn active" role="tab" aria-selected="true" data-tab="tab-detect" id="btn-tab-detect">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
         <span>Live Detector</span>
       </button>
-      <button class="tab-btn" data-tab="tab-metrics">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+      <button class="segment-btn" role="tab" aria-selected="false" data-tab="tab-benchmarks" id="btn-tab-benchmarks">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
         <span>Model Benchmarks</span>
       </button>
-      <button class="tab-btn" data-tab="tab-languages">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        <span>Supported Languages ({{ languages|length }})</span>
+      <button class="segment-btn" role="tab" aria-selected="false" data-tab="tab-languages" id="btn-tab-languages">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span>Languages Directory ({{ languages|length }})</span>
       </button>
-      <button class="tab-btn" data-tab="tab-api">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
-        <span>API Docs</span>
+      <button class="segment-btn" role="tab" aria-selected="false" data-tab="tab-api" id="btn-tab-api">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+        <span>API & Integration</span>
       </button>
     </nav>
 
-    <!-- Tab 1: Live Detector -->
-    <div id="tab-detect" class="tab-panel active">
-      <div class="detector-grid">
+    <!-- ======================================================================
+         TAB 1: Live Detection Workbench
+         ====================================================================== -->
+    <section id="tab-detect" class="tab-content active" role="tabpanel" aria-labelledby="btn-tab-detect">
+      <div class="workbench-grid">
 
-        <!-- Input Column -->
-        <div class="card">
-          <div class="card-title">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-            <span>Input Text</span>
-          </div>
+        <!-- Column 1: Input Console -->
+        <div class="workbench-card">
+          <div class="card-toolbar">
+            <div class="toolbar-title">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+              <span>Text Input Console</span>
+            </div>
 
-          <div class="input-wrapper">
-            <textarea 
-              id="textInput" 
-              class="text-input" 
-              placeholder="Type or paste text in any language here... (e.g. English, French, Spanish, Hindi, Russian, Arabic, Japanese, etc.)"
-            ></textarea>
-            <div class="input-footer">
-              <span id="charCount">0 chars</span>
-              <span id="wordCount">0 words</span>
+            <div class="toolbar-actions">
+              <span id="detectedScriptBadge" class="script-telemetry" title="Real-time script detection">
+                <span id="scriptBadgeIcon">🔤</span>
+                <span id="scriptBadgeText">Waiting for text...</span>
+              </span>
             </div>
           </div>
 
-          <div class="btn-row">
-            <button id="detectBtn" class="btn btn-primary">
-              <span>Detect Language</span>
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-            </button>
-            <button id="clearBtn" class="btn btn-secondary">Clear</button>
+          <div class="editor-wrapper">
+            <textarea 
+              id="textInput" 
+              class="workbench-textarea" 
+              placeholder="Paste or type any phrase, paragraph, or sentence in any language... (e.g. English, Español, Français, Deutsch, हिन्दी, Русский, العربية, 日本語, etc.)"
+              aria-label="Input text to detect language"
+            ></textarea>
+
+            <div class="editor-telemetry-bar">
+              <div class="telemetry-group">
+                <span id="charCount" class="telemetry-item">0 chars</span>
+                <span>•</span>
+                <span id="wordCount" class="telemetry-item">0 words</span>
+              </div>
+              <div class="keyboard-hint">
+                <span>Press <kbd>Ctrl</kbd> + <kbd>Enter</kbd> to analyze</span>
+              </div>
+            </div>
+
+            <div class="action-row">
+              <button id="detectBtn" class="btn btn-primary" title="Trigger language detection pipeline">
+                <span>Detect Language</span>
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </button>
+              <button id="pasteBtn" class="btn btn-secondary" title="Paste from clipboard">
+                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                <span>Paste</span>
+              </button>
+              <button id="clearBtn" class="btn btn-secondary" title="Clear text (Esc)">
+                <span>Clear</span>
+              </button>
+            </div>
           </div>
 
-          <!-- Quick Test Presets -->
-          <div class="samples-section">
-            <div class="samples-label">Quick Test Sample Presets:</div>
-            <div class="samples-chips">
-              <button class="chip" data-sample="Artificial intelligence and machine learning are revolutionizing software development worldwide.">🇬🇧 English</button>
-              <button class="chip" data-sample="Bonjour tout le monde! C'est un plaisir de vous rencontrer aujourd'hui dans ce projet.">🇫🇷 French</button>
-              <button class="chip" data-sample="Hola, este es un sistema inteligente de procesamiento de lenguaje natural en tiempo real.">🇪🇸 Spanish</button>
-              <button class="chip" data-sample="Hallo, das maschinelle Lernen und die künstliche Intelligenz bieten erstaunliche Möglichkeiten.">🇩🇪 German</button>
-              <button class="chip" data-sample="नमस्ते दोस्तों, प्राकृतिक भाषा प्रसंस्करण तकनीक कंप्यूटर को मानवीय भाषा समझने की शक्ति देती है।">🇮🇳 Hindi</button>
-              <button class="chip" data-sample="Привет мир! Машинное обучение и искусственный интеллект меняют наш мир к лучшему.">🇷🇺 Russian</button>
-              <button class="chip" data-sample="مرحبا بكم في هذا المشروع المتطور للتعرف التلقائي على اللغات الطبيعية.">🇸🇦 Arabic</button>
-              <button class="chip" data-sample="こんにちは、機械学習による高精度な言語判定システムをテストしています。">🇯🇵 Japanese</button>
-              <button class="chip" data-sample="வணக்கம், இயற்கை மொழி செயலாக்கம் கணினிகளுக்கு மனித மொழியைப் புரிந்துகொள்ள உதவுகிறது.">🇮🇳 Tamil</button>
+          <!-- Quick Native Presets -->
+          <div class="presets-container">
+            <div class="presets-header">
+              <span class="presets-label">Quick Test Presets (Click to analyze):</span>
+            </div>
+            <div class="presets-grid">
+              <button class="preset-chip" data-sample="Language detection is the backbone of multilingual software products worldwide.">🇬🇧 English</button>
+              <button class="preset-chip" data-sample="Bonjour tout le monde! C'est un grand plaisir de vous rencontrer aujourd'hui.">🇫🇷 Français</button>
+              <button class="preset-chip" data-sample="Hola, este es un sistema inteligente de procesamiento de lenguaje natural.">🇪🇸 Español</button>
+              <button class="preset-chip" data-sample="Hallo, maschinelles Lernen und künstliche Intelligenz bieten erstaunliche Möglichkeiten.">🇩🇪 Deutsch</button>
+              <button class="preset-chip" data-sample="नमस्ते दोस्तों, प्राकृतिक भाषा प्रसंस्करण कंप्यूटर को मानवीय भाषा समझने की शक्ति देता है।">🇮🇳 हिन्दी</button>
+              <button class="preset-chip" data-sample="Привет мир! Обработка естественного языка меняет наш мир к лучшему.">🇷🇺 Русский</button>
+              <button class="preset-chip" data-sample="مرحبا بكم في هذا المشروع المتطور للتعرف التلقائي على اللغات الطبيعية.">🇸🇦 العربية</button>
+              <button class="preset-chip" data-sample="こんにちは、機械学習による高精度な言語判定システムをテストしています。">🇯🇵 日本語</button>
+              <button class="preset-chip" data-sample="자연어 처리는 컴퓨터가 인간의 언어를 이해하도록 돕는 인공지능 기술입니다.">🇰🇷 한국어</button>
+              <button class="preset-chip" data-sample="வணக்கம், இயற்கை மொழி செயலாக்கம் கணினிகளுக்கு மனித மொழியைப் புரிந்துகொள்ள உதவுகிறது.">🇮🇳 தமிழ்</button>
+              <button class="preset-chip" data-sample="自然语言处理是计算机科学领域与人工智能领域中的一个重要方向。">🇨🇳 中文</button>
+              <button class="preset-chip" data-sample="O processamento de linguagem natural permite que os computadores compreendam o texto.">🇵🇹 Português</button>
             </div>
           </div>
         </div>
 
-        <!-- Result Column -->
-        <div class="card">
-          <div class="card-title">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span>Prediction Result</span>
+        <!-- Column 2: Analysis Inspector Panel -->
+        <div class="workbench-card">
+          <div class="card-toolbar">
+            <div class="toolbar-title">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span>Linguistic Analysis Inspector</span>
+            </div>
+            <div class="toolbar-actions">
+              <span id="latencyBadge" class="spec-chip" style="display:none;">⚡ 0 ms</span>
+            </div>
           </div>
 
-          <!-- Initial Empty State -->
-          <div id="resultPlaceholder" class="result-placeholder">
-            <div class="placeholder-icon">🌐</div>
-            <p>Enter text on the left or select a sample preset to detect its language in real time.</p>
-          </div>
+          <div class="inspector-body">
 
-          <!-- Active Result Card -->
-          <div id="resultCard" class="result-card">
-            
-            <div class="primary-result">
-              <div class="lang-header">
-                <div id="flagEmoji" class="flag-emoji">🌐</div>
-                <div class="lang-names">
-                  <h3 id="langTitle">English</h3>
-                  <div class="native-name">
-                    <span id="nativeName">English</span>
-                    <span id="langCode" class="badge-code">EN</span>
+            <!-- Empty State -->
+            <div id="inspectorEmptyState" class="inspector-empty-state">
+              <div class="empty-state-icon">🌐</div>
+              <p class="empty-state-text">
+                Enter text on the left or select a sample preset to trigger real-time multi-class language classification.
+              </p>
+            </div>
+
+            <!-- Active Result Surface -->
+            <div id="inspectorResultCard" class="result-surface" aria-live="polite">
+
+              <!-- Primary Identified Language Card -->
+              <div class="primary-identity-card">
+                <div class="identity-header">
+                  <div class="identity-badge-row">
+                    <div id="resultFlagAvatar" class="country-flag-avatar" aria-hidden="true">🌐</div>
+                    <div class="language-naming">
+                      <h2 id="resultLanguageTitle" class="lang-primary-title">English</h2>
+                      <div class="lang-native-line">
+                        <span id="resultNativeName" class="native-name-text">English</span>
+                        <span id="resultIsoCode" class="iso-code-pill">EN</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="quick-tools-row">
+                    <button id="speakBtn" class="icon-btn" title="Pronounce sample using speech synthesis" aria-label="Listen pronunciation">
+                      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+                    </button>
+                    <button id="copyResultBtn" class="icon-btn" title="Copy prediction result" aria-label="Copy result">
+                      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Confidence Meter Bar -->
+                <div class="confidence-meter-box">
+                  <div class="confidence-header-line">
+                    <span class="confidence-label">Prediction Confidence</span>
+                    <span id="resultConfidenceScore" class="confidence-numeric tabular">98.5%</span>
+                  </div>
+                  <div class="confidence-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="confidenceProgressTrack">
+                    <div id="resultConfidenceFill" class="confidence-bar-fill"></div>
+                  </div>
+                </div>
+
+                <!-- Linguistic Metadata Grid -->
+                <div class="meta-specs-grid">
+                  <div class="meta-spec-item">
+                    <span class="meta-spec-key">Language Family</span>
+                    <span id="resultMetaFamily" class="meta-spec-val">Indo-European</span>
+                  </div>
+                  <div class="meta-spec-item">
+                    <span class="meta-spec-key">Writing System</span>
+                    <span id="resultMetaScript" class="meta-spec-val">Latin</span>
                   </div>
                 </div>
               </div>
 
-              <div class="confidence-bar-wrapper">
-                <div class="confidence-label-row">
-                  <span>Model Confidence</span>
-                  <span id="confidencePercent">98.5%</span>
-                </div>
-                <div class="progress-track">
-                  <div id="progressFill" class="progress-fill"></div>
+              <!-- Candidate Probability Distribution Spectrum -->
+              <div class="spectrum-section">
+                <span class="section-caption">Candidate Probability Distribution</span>
+                <div id="spectrumList" class="spectrum-list">
+                  <!-- Injected via JavaScript -->
                 </div>
               </div>
 
-              <div class="metadata-grid">
-                <div class="meta-box">
-                  <div class="meta-label">Language Family</div>
-                  <div id="langFamily" class="meta-value">Indo-European</div>
+              <!-- NLP Preprocessing Drawer -->
+              <div class="nlp-drawer">
+                <div id="nlpDrawerToggle" class="nlp-drawer-header" role="button" aria-expanded="false">
+                  <span>NLP Preprocessing Telemetry</span>
+                  <svg id="drawerArrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                 </div>
-                <div class="meta-box">
-                  <div class="meta-label">Writing System</div>
-                  <div id="langScript" class="meta-value">Latin</div>
+                <div id="nlpDrawerBody" class="nlp-drawer-content" style="display:none;">
+                  <div style="display:flex; justify-content:space-between; color:var(--text-muted);">
+                    <span>Normalization: Unicode NFKC</span>
+                    <span id="charRatioStats">Chars: 0 &rarr; 0</span>
+                  </div>
+                  <div class="nlp-cleaned-box" id="resultCleanedPreview">...</div>
                 </div>
               </div>
-            </div>
 
-            <!-- Top Probabilities Breakdown -->
-            <div class="distribution-title">Candidate Probability Breakdown:</div>
-            <div id="distributionList" class="distribution-list">
-              <!-- Dynamically populated -->
-            </div>
-
-            <!-- Cleaned Text Debug Info -->
-            <div class="cleaned-preview">
-              <div class="cleaned-preview-title">Cleaned & Normalized NLP Representation:</div>
-              <div id="cleanedTextPreview" class="cleaned-preview-text">...</div>
             </div>
 
           </div>
         </div>
 
       </div>
-    </div>
+    </section>
 
-    <!-- Tab 2: Model Benchmarks -->
-    <div id="tab-metrics" class="tab-panel">
-      <div class="card">
-        <div class="card-title">🏆 Model Architecture & Performance Comparison</div>
-        <p style="color: var(--text-muted); margin-bottom: 20px;">
-          As part of the NLP modeling methodology, three distinct multi-class classifiers were trained and evaluated 
-          on identical stratified splits using 50,000 sublinear TF-IDF character n-gram features.
-        </p>
+    <!-- ======================================================================
+         TAB 2: Model Architecture & Benchmarks
+         ====================================================================== -->
+    <section id="tab-benchmarks" class="tab-content" role="tabpanel" aria-labelledby="btn-tab-benchmarks">
+      <div class="benchmark-layout">
 
-        <div class="metrics-grid">
-          <div class="metric-card">
-            <div class="metric-header">
-              <span>Logistic Regression</span>
-              <span class="badge-best">PRIMARY</span>
+        <!-- KPI Summary Cards -->
+        <div class="kpi-row">
+          <div class="kpi-card highlight">
+            <div class="kpi-label-row">
+              <span class="kpi-title">Logistic Regression</span>
+              <span class="badge-tag badge-selected">SELECTED PIPELINE</span>
             </div>
-            <div class="metric-stat">98.66%</div>
-            <div class="metric-desc">Test Set Accuracy • 98.68% Macro F1 • 98.64% 3-Fold Cross-Validation</div>
+            <div class="kpi-big-number">98.66%</div>
+            <div class="kpi-caption">Held-out test set accuracy across 6,420 evaluation samples with 98.68% Macro F1.</div>
           </div>
-          <div class="metric-card">
-            <div class="metric-header">
-              <span>Linear Support Vector</span>
-              <span class="badge-best">CALIBRATED</span>
+
+          <div class="kpi-card">
+            <div class="kpi-label-row">
+              <span class="kpi-title">Linear Support Vector</span>
+              <span class="badge-tag badge-baseline">CALIBRATED</span>
             </div>
-            <div class="metric-stat">98.73%</div>
-            <div class="metric-desc">High-dimensional hyper-plane separator with isotonic calibration</div>
+            <div class="kpi-big-number">98.73%</div>
+            <div class="kpi-caption">High-dimensional linear hyperplane separator using L2 penalty and Platt-calibrated margins.</div>
           </div>
-          <div class="metric-card">
-            <div class="metric-header">
-              <span>Multinomial Naive Bayes</span>
-              <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">BASELINE</span>
+
+          <div class="kpi-card">
+            <div class="kpi-label-row">
+              <span class="kpi-title">Multinomial Naive Bayes</span>
+              <span class="badge-tag badge-baseline">BASELINE</span>
             </div>
-            <div class="metric-stat">98.18%</div>
-            <div class="metric-desc">Probabilistic bag-of-ngrams with Laplace smoothing (α=0.1)</div>
+            <div class="kpi-big-number">98.18%</div>
+            <div class="kpi-caption">Probabilistic bag-of-ngrams with Laplace smoothing (&alpha;=0.1) for fast baseline verification.</div>
           </div>
         </div>
 
-        <h3 style="margin: 24px 0 12px; font-size: 1.15rem;">Detailed Comparison Matrix</h3>
-        <div style="overflow-x: auto;">
-          <table class="comparison-table">
-            <thead>
-              <tr>
-                <th>Model Architecture</th>
-                <th>Test Accuracy</th>
-                <th>Macro Precision</th>
-                <th>Macro Recall</th>
-                <th>Macro F1-Score</th>
-                <th>Training Time</th>
-                <th>Inference Latency</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for name, stats in comparison.items() %}
-              <tr>
-                <td><strong>{{ name }}</strong> {% if name == 'Logistic Regression' %}<span class="badge-best">Selected</span>{% endif %}</td>
-                <td>{{ ((stats.accuracy or 0) * 100)|round(2) }}%</td>
-                <td>{{ ((stats.macro_precision or 0) * 100)|round(2) }}%</td>
-                <td>{{ ((stats.macro_recall or 0) * 100)|round(2) }}%</td>
-                <td>{{ ((stats.macro_f1 or 0) * 100)|round(2) }}%</td>
-                <td>{{ stats.train_time_sec }}s</td>
-                <td>{{ stats.inference_time_sec }}s</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+        <!-- Detailed Multi-Model Benchmark Comparison Table -->
+        <div class="data-table-container">
+          <div class="table-header-block">
+            <h3>Multi-Model Architectural Comparison</h3>
+            <p>Evaluating feature extraction and classifier variants under identical stratified cross-validation splits.</p>
+          </div>
+          <div class="responsive-table-scroll">
+            <table class="styled-table">
+              <thead>
+                <tr>
+                  <th>Model Architecture</th>
+                  <th>Test Accuracy</th>
+                  <th>Macro Precision</th>
+                  <th>Macro Recall</th>
+                  <th>Macro F1-Score</th>
+                  <th>Training Time</th>
+                  <th>Inference Latency</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for name, stats in comparison.items() %}
+                <tr>
+                  <td>
+                    <strong>{{ name }}</strong> 
+                    {% if name == 'Logistic Regression' %}
+                      <span class="badge-tag badge-selected" style="margin-left:6px;">Production</span>
+                    {% endif %}
+                  </td>
+                  <td><strong>{{ ((stats.accuracy or 0) * 100)|round(2) }}%</strong></td>
+                  <td>{{ ((stats.macro_precision or 0) * 100)|round(2) }}%</td>
+                  <td>{{ ((stats.macro_recall or 0) * 100)|round(2) }}%</td>
+                  <td>{{ ((stats.macro_f1 or 0) * 100)|round(2) }}%</td>
+                  <td>{{ stats.train_time_sec }}s</td>
+                  <td>{{ stats.inference_time_sec }}s</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        <h3 style="margin: 30px 0 12px; font-size: 1.15rem;">Multi-Class Confusion Matrix Heatmap</h3>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">
-          Evaluating predictions across 6,420 held-out test samples demonstrates strong diagonal density with near-zero cross-lingual leakage.
-        </p>
-        <div class="image-container">
-          <img src="{{ url_for('static', filename='confusion_matrix.png') }}" alt="Language Detection Confusion Matrix">
+        <!-- Multi-Class Confusion Matrix Heatmap -->
+        <div class="heatmap-presentation-card">
+          <div>
+            <h3>Multi-Class Confusion Matrix Heatmap (28 Languages)</h3>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin-top:4px;">
+              Diagonal intensity validates strong cross-lingual discriminative power across Latin, Cyrillic, Indic, and Perso-Arabic scripts.
+            </p>
+          </div>
+
+          <div class="heatmap-media-wrapper" id="heatmapTrigger" title="Click to view full-resolution confusion matrix">
+            <img src="{{ url_for('static', filename='confusion_matrix.png') }}" alt="Multi-Class Confusion Matrix Heatmap" id="heatmapImg">
+            <div class="heatmap-zoom-hint">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
+              <span>Click to Zoom</span>
+            </div>
+          </div>
         </div>
+
       </div>
-    </div>
+    </section>
 
-    <!-- Tab 3: Supported Languages Directory -->
-    <div id="tab-languages" class="tab-panel">
-      <div class="card">
-        <div class="card-title">🌍 Supported Languages Directory</div>
-        <p style="color: var(--text-muted); margin-bottom: 16px;">
-          The system currently supports {{ languages|length }} global languages spanning Latin, Cyrillic, Perso-Arabic, 
-          Devanagari, Dravidian, East Asian, and Southeast Asian writing scripts.
-        </p>
+    <!-- ======================================================================
+         TAB 3: Supported Languages Directory
+         ====================================================================== -->
+    <section id="tab-languages" class="tab-content" role="tabpanel" aria-labelledby="btn-tab-languages">
+      <div>
+        <div class="directory-filter-bar">
+          <div class="search-box-wrap">
+            <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input type="text" id="langSearchInput" class="search-input" placeholder="Search language, script, or ISO code...">
+          </div>
 
-        <div class="languages-grid">
+          <div class="family-filter-chips" id="familyFilterGroup">
+            <button class="filter-pill active" data-family="all">All ({{ languages|length }})</button>
+            <button class="filter-pill" data-family="Indo-European">Indo-European</button>
+            <button class="filter-pill" data-family="Dravidian">Dravidian</button>
+            <button class="filter-pill" data-family="Afroasiatic">Afroasiatic</button>
+            <button class="filter-pill" data-family="Sino-Tibetan">Sino-Tibetan</button>
+            <button class="filter-pill" data-family="Japonic">Japonic/Koreanic</button>
+          </div>
+        </div>
+
+        <div class="languages-grid-cards" id="languagesCatalogGrid">
           {% for lang in languages %}
             {% set meta = metadata.get(lang, {}) %}
-            <div class="lang-chip-card">
-              <div class="lang-chip-flag">{{ meta.flag or '🌐' }}</div>
-              <div>
-                <div class="lang-chip-name">{{ lang }} <span class="badge-code">{{ (meta.code or 'und')|upper }}</span></div>
-                <div class="lang-chip-native">{{ meta.native or lang }}</div>
-                <div class="lang-chip-family">{{ meta.family or 'Unknown' }}</div>
+            <div class="lang-catalog-card" data-lang="{{ lang|lower }}" data-script="{{ (meta.script or '')|lower }}" data-family="{{ (meta.family or '')|lower }}">
+              <div class="catalog-card-body">
+                <div class="catalog-card-header">
+                  <div class="catalog-flag">{{ meta.flag or '🌐' }}</div>
+                  <div class="catalog-names">
+                    <span class="catalog-title">
+                      {{ lang }} 
+                      <span class="iso-code-pill">{{ (meta.code or 'und')|upper }}</span>
+                    </span>
+                    <span class="catalog-native">{{ meta.native or lang }}</span>
+                  </div>
+                </div>
+
+                <div class="catalog-details">
+                  <span><strong>Family:</strong> {{ meta.family or 'Unknown' }}</span>
+                  <span><strong>Script:</strong> {{ meta.script or 'Latin' }}</span>
+                </div>
               </div>
+
+              <button class="catalog-action-btn load-sample-btn" data-lang="{{ lang }}">
+                <span>Test in Detector &rarr;</span>
+              </button>
             </div>
           {% endfor %}
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Tab 4: API Docs -->
-    <div id="tab-api" class="tab-panel">
-      <div class="card">
-        <div class="card-title">⚡ REST API Integration Guide</div>
-        <p style="color: var(--text-muted);">
-          Integrate real-time language detection into your downstream microservices, web apps, or pipelines using JSON HTTP endpoints.
-        </p>
+    <!-- ======================================================================
+         TAB 4: API Docs & Interactive Playground
+         ====================================================================== -->
+    <section id="tab-api" class="tab-content" role="tabpanel" aria-labelledby="btn-tab-api">
+      <div class="api-docs-layout">
 
-        <h4 style="margin-top: 20px;">1. Detect Language Endpoint</h4>
-        <p style="font-size: 0.9rem; margin-top: 4px;"><code>POST /api/predict</code></p>
-        
-        <div class="code-block">curl -X POST http://localhost:5000/api/predict \
+        <!-- Endpoint Specifications -->
+        <div class="api-section-card">
+          <div>
+            <h3>REST API Specifications</h3>
+            <p style="color:var(--text-muted); font-size:0.88rem; margin-top:4px;">
+              Easily connect downstream pipelines or microservices to the real-time inference server.
+            </p>
+          </div>
+
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+              <span class="badge-tag badge-selected">POST</span>
+              <code>/api/predict</code>
+            </div>
+            <div class="code-container">
+              <div class="code-header-bar">
+                <span>cURL Request</span>
+                <button class="copy-code-btn" data-target="codeCurl">Copy</button>
+              </div>
+              <pre class="code-content" id="codeCurl">curl -X POST http://localhost:5000/api/predict \
   -H "Content-Type: application/json" \
-  -d '{"text": "Bonjour, comment allez-vous aujourd hui?", "top_k": 3}'</div>
+  -d '{
+    "text": "Bonjour tout le monde!",
+    "top_k": 3
+  }'</pre>
+            </div>
+          </div>
 
-        <h4 style="margin-top: 20px;">Sample JSON Response</h4>
-        <div class="code-block">{
-  "success": true,
-  "predicted_language": "French",
-  "confidence": 98.74,
-  "code": "fr",
-  "native": "Français",
-  "flag": "🇫🇷",
-  "family": "Indo-European (Romance)",
-  "script": "Latin",
-  "top_predictions": [
-    {
-      "language": "French",
-      "confidence_percent": 98.74,
-      "native": "Français",
-      "flag": "🇫🇷"
-    },
-    {
-      "language": "Spanish",
-      "confidence_percent": 0.82,
-      "native": "Español",
-      "flag": "🇪🇸"
-    }
-  ]
-}</div>
+          <div>
+            <div class="code-container">
+              <div class="code-header-bar">
+                <span>Python Client (requests)</span>
+                <button class="copy-code-btn" data-target="codePython">Copy</button>
+              </div>
+              <pre class="code-content" id="codePython">import requests
 
-        <h4 style="margin-top: 20px;">2. Python Integration Example</h4>
-        <div class="code-block">import requests
+res = requests.post("http://localhost:5000/api/predict", json={
+    "text": "नमस्ते दोस्तों, आप कैसे हैं?",
+    "top_k": 3
+})
+data = res.json()
+print(f"Language: {data['predicted_language']} ({data['confidence']}%)")</pre>
+            </div>
+          </div>
+        </div>
 
-url = "http://localhost:5000/api/predict"
-payload = {"text": "नमस्ते, आप कैसे हैं?"}
-response = requests.post(url, json=payload)
-data = response.json()
+        <!-- Live API Playground -->
+        <div class="api-section-card">
+          <div>
+            <h3>Interactive API Tester</h3>
+            <p style="color:var(--text-muted); font-size:0.88rem; margin-top:4px;">
+              Execute direct queries to the live Flask backend and view the raw JSON payload.
+            </p>
+          </div>
 
-print(f"Detected: {data['predicted_language']} ({data['confidence']}%) {data['flag']}")</div>
+          <div style="display:flex; gap:8px;">
+            <input type="text" id="apiPlaygroundInput" class="search-input" value="Hola, este es un texto de prueba." style="flex:1;">
+            <button id="apiSendBtn" class="btn btn-primary" style="flex:none; padding:8px 14px;">Send</button>
+          </div>
+
+          <div class="code-container" style="flex:1;">
+            <div class="code-header-bar">
+              <span>Response JSON (Status <span id="apiStatusCode">200</span>)</span>
+              <button class="copy-code-btn" data-target="apiResponseArea">Copy</button>
+            </div>
+            <pre class="code-content" id="apiResponseArea" style="max-height:280px; overflow-y:auto;">{
+  "status": "ready",
+  "message": "Click 'Send' to test endpoint"
+}</pre>
+          </div>
+        </div>
+
       </div>
-    </div>
+    </section>
 
   </main>
 
-  <footer>
-    <p>Language Detection Project for FSP (Final Semester Project) • Built with Python, scikit-learn, and Flask</p>
+  <!-- Confusion Matrix Lightbox Modal -->
+  <div id="imageModal" class="modal-backdrop" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+      <button id="modalCloseBtn" class="modal-close-btn" aria-label="Close image modal">&times;</button>
+      <img src="{{ url_for('static', filename='confusion_matrix.png') }}" alt="Full Size Confusion Matrix Heatmap" class="modal-image">
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toastNotice" class="toast-notice" role="alert" aria-live="assertive">
+    <span id="toastIcon">📋</span>
+    <span id="toastMessage">Copied to clipboard</span>
+  </div>
+
+  <!-- Studio Footer -->
+  <footer class="studio-footer">
+    <div class="footer-inner">
+      <span>LinguaScan • Language Detection with NLP &amp; Machine Learning</span>
+      <span>Scikit-Learn • Flask • TF-IDF Character n-grams</span>
+    </div>
   </footer>
 
   <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
+
 </html>
