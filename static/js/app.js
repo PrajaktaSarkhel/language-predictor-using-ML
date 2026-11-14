@@ -149,8 +149,8 @@ document.addEventListener("DOMContentLoaded", () => {
     wordCount.textContent = `${words} words`;
 
     const info = identifyUnicodeScript(val);
-    scriptBadgeText.textContent = info.script;
-    scriptBadgeIcon.textContent = info.icon;
+    if (scriptBadgeText) scriptBadgeText.textContent = info.script;
+    if (scriptBadgeIcon) scriptBadgeIcon.textContent = info.icon;
   }
 
   // =========================================================================
@@ -191,11 +191,11 @@ document.addEventListener("DOMContentLoaded", () => {
           textInput.value = text;
           updateCountersAndScript();
           executeInference();
-          showToast("📋 Text pasted from clipboard");
+          showToast("Text pasted from clipboard");
         }
       } catch (err) {
         textInput.focus();
-        showToast("⚠️ Please paste using Ctrl+V");
+        showToast("Please paste using Ctrl+V");
       }
     });
   }
@@ -275,7 +275,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Latency
     latencyBadge.style.display = "inline-flex";
-    latencyBadge.textContent = `⚡ ${elapsedMs} ms`;
+    const latencyVal = document.getElementById("latencyValue");
+    if (latencyVal) {
+      latencyVal.textContent = `${elapsedMs} ms`;
+    } else {
+      latencyBadge.textContent = `${elapsedMs} ms`;
+    }
 
     // Identified Entity
     resultFlagAvatar.textContent = data.flag || "🌐";
@@ -371,9 +376,9 @@ document.addEventListener("DOMContentLoaded", () => {
           utterance.lang = latestPredictionData.code;
         }
         window.speechSynthesis.speak(utterance);
-        showToast("🔊 Playing pronunciation");
+        showToast("Playing pronunciation");
       } else {
-        showToast("⚠️ Speech synthesis not supported in this browser");
+        showToast("Speech synthesis not supported in this browser");
       }
     });
   }
@@ -388,7 +393,7 @@ Family: ${latestPredictionData.family}
 Script: ${latestPredictionData.script}`;
 
       navigator.clipboard.writeText(summary).then(() => {
-        showToast("📋 Result copied to clipboard");
+        showToast("Result copied to clipboard");
       });
     });
   }
@@ -520,7 +525,7 @@ Script: ${latestPredictionData.script}`;
       if (targetEl) {
         const text = targetEl.textContent;
         navigator.clipboard.writeText(text).then(() => {
-          showToast("📋 Code copied to clipboard");
+          showToast("Code copied to clipboard");
         });
       }
     });

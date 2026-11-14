@@ -326,6 +326,16 @@ code, kbd, samp, pre, .tabular {
   color: var(--text-primary);
 }
 
+.spec-chip svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.script-telemetry svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
 /* ==========================================================================
    Main App Container & Segmented Tabs
    ========================================================================== */

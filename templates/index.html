@@ -57,10 +57,22 @@
       </p>
 
       <div class="spec-meta-row">
-        <span class="spec-chip">🧠 <strong>Model:</strong> Logistic Regression (C=5.0)</span>
-        <span class="spec-chip">🔤 <strong>Features:</strong> 50,000 Char n-grams</span>
-        <span class="spec-chip">📊 <strong>Accuracy:</strong> 98.66% Test Split</span>
-        <span class="spec-chip">⚡ <strong>Latency:</strong> &lt; 8 ms</span>
+        <span class="spec-chip">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>
+          <span><strong>Model:</strong> Logistic Regression (C=5.0)</span>
+        </span>
+        <span class="spec-chip">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
+          <span><strong>Features:</strong> 50,000 Char n-grams</span>
+        </span>
+        <span class="spec-chip">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          <span><strong>Accuracy:</strong> 98.66% Test Split</span>
+        </span>
+        <span class="spec-chip">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <span><strong>Latency:</strong> &lt; 8 ms</span>
+        </span>
       </div>
     </div>
   </header>
@@ -104,7 +116,7 @@
 
             <div class="toolbar-actions">
               <span id="detectedScriptBadge" class="script-telemetry" title="Real-time script detection">
-                <span id="scriptBadgeIcon">🔤</span>
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
                 <span id="scriptBadgeText">Waiting for text...</span>
               </span>
             </div>
@@ -174,7 +186,10 @@
               <span>Linguistic Analysis Inspector</span>
             </div>
             <div class="toolbar-actions">
-              <span id="latencyBadge" class="spec-chip" style="display:none;">⚡ 0 ms</span>
+              <span id="latencyBadge" class="spec-chip" style="display:none;">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                <span id="latencyValue">0 ms</span>
+              </span>
             </div>
           </div>
 
@@ -182,7 +197,9 @@
 
             <!-- Empty State -->
             <div id="inspectorEmptyState" class="inspector-empty-state">
-              <div class="empty-state-icon">🌐</div>
+              <div class="empty-state-icon">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+              </div>
               <p class="empty-state-text">
                 Enter text on the left or select a sample preset to trigger real-time multi-class language classification.
               </p>
@@ -513,7 +530,7 @@ print(f"Language: {data['predicted_language']} ({data['confidence']}%)")</pre>
 
   <!-- Toast Notification -->
   <div id="toastNotice" class="toast-notice" role="alert" aria-live="assertive">
-    <span id="toastIcon">📋</span>
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
     <span id="toastMessage">Copied to clipboard</span>
   </div>
 
