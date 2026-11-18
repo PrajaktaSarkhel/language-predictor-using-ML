@@ -2,12 +2,12 @@
 
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-v1.4+-orange.svg)](https://scikit-learn.org/)
-[![Model Accuracy](https://img.shields.io/badge/Accuracy-98.50%25-brightgreen.svg)]()
+[![Model Accuracy](https://img.shields.io/badge/Accuracy-98.50%25-yellow.svg)]()
 [![Supported Languages](https://img.shields.io/badge/Languages-28%20Global%20Classes-purple.svg)]()
-[![Framework](https://img.shields.io/badge/Web%20UI-Flask%20%2B%20REST%20API-teal.svg)]()
+[![Framework](https://img.shields.io/badge/Web%20UI-FastAPI%20%2B%20REST%20API-teal.svg)]()
 [![License](https://img.shields.io/badge/License-MIT-green.svg)]()
 
-An end-to-end, production-grade Natural Language Processing (NLP) and Machine Learning system that accurately detects and classifies text across **28 world languages** in real time. Built with **scikit-learn**, **TF-IDF character n-gram featurization**, and **multi-class Logistic Regression**, complete with a modern responsive Web UI and JSON REST API.
+An end-to-end Natural Language Processing (NLP) and Machine Learning system that predicts text language across **28 classes**. Built with **scikit-learn**, **TF-IDF character n-gram features**, **Logistic Regression** classifier, a responsive static frontend, and a **FastAPI** JSON API.
 
 ---
 
@@ -24,12 +24,12 @@ Language detection is the critical backbone of multilingual software products:
 ## 🚀 Key Features
 
 * **Multi-Class NLP Classification Across 28 Languages**: Covers major European, Asian, Middle Eastern, and Dravidian languages.
-* **High Predictive Accuracy (98.50%)**: Outperforms traditional word-level bag-of-words using sublinear character n-grams ($n \in [1, 4]$).
-* **Multi-Model Benchmark Comparison**: Includes empirical evaluation of **Logistic Regression**, **Multinomial Naive Bayes**, and **Linear Support Vector Classifier (LinearSVC)**.
+* **Measured held-out accuracy (98.50%)**: The current split result is documented below; the requested 99% accuracy target has not yet been met.
+* **Notebook-based training**: A single self-contained notebook contains preprocessing, model training, evaluation, and artifact export.
 * **Unicode-Aware Preprocessing**: Preserves combining marks (matras, accents, diacritics) for non-Latin scripts (Devanagari, Tamil, Arabic, Cyrillic, CJK, Thai) while removing noise, citation numbers, and URLs.
 * **Interactive Web Application**: Clean, modern web interface with real-time prediction, probability breakdown bars, and 1-click sample presets.
 * **Production-Ready REST API**: Microservice-ready endpoints (`/api/predict`, `/api/languages`, `/health`).
-* **Complete Test Suite**: Automated unit tests covering text cleaning, model inference, edge cases, and API responses.
+* **FastAPI backend**: Serves the static frontend and provides JSON prediction, languages, and health endpoints.
 
 ---
 
@@ -51,21 +51,21 @@ Raw Multilingual Text
 ┌──────────────────────────────────────────────┐
 │  2. Feature Extraction (TF-IDF Vectorizer)   │
 │  - Sublinear Term Frequency Scaling          │
-│  - Character n-grams (range: 1 to 4)         │
+│  - Character n-grams (range: 2 to 5)         │
 │  - 50,000 Discriminative Feature Dimensions  │
 └──────────────────────┬───────────────────────┘
                        │
                        ▼
 ┌──────────────────────────────────────────────┐
 │  3. Multi-Class NLP Classifier               │
-│  - Logistic Regression (Multinomial Softmax) │
+│  - Logistic Regression (Multinomial Softmax)    │
 │  - Serialized via Joblib                     │
 └──────────────────────┬───────────────────────┘
                        │
          ┌─────────────┴─────────────┐
          ▼                           ▼
 ┌──────────────────┐       ┌───────────────────┐
-│ Modern Web UI    │       │ JSON REST API     │
+│ Static Web UI    │       │ FastAPI REST API  │
 │ (Real-Time Live) │       │ (/api/predict)    │
 └──────────────────┘       └───────────────────┘
 ```
@@ -74,18 +74,16 @@ Raw Multilingual Text
 
 ## 📊 Model Evaluation & Benchmarks
 
-All models were evaluated on an identical **80/20 stratified train-test split** of 32,098 multilingual text samples:
+The notebook evaluates a stratified **80/20 train-test split** of 32,098 multilingual text samples using Logistic Regression only. On the previously supplied split, Logistic Regression measured **98.50% accuracy**, **98.85% macro precision**, **98.28% macro recall**, and **98.55% macro F1**. The accuracy remains below the requested 99% target.
 
-| Model Architecture | Test Accuracy | Macro Precision | Macro Recall | Macro F1-Score | Fit Time |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **Logistic Regression** (Production Selected) | **98.50%** | **98.66%** | **98.50%** | **98.56%** | ~168s |
-| **Linear Support Vector (LinearSVC)** | 98.58% | 98.71% | 98.58% | 98.65% | ~53s |
-| **Multinomial Naive Bayes** (Baseline) | 98.18% | 98.43% | 98.18% | 98.39% | ~43s |
+| Model Architecture | Test Accuracy | Macro Precision | Macro Recall | Macro F1-Score |
+| :--- | :---: | :---: | :---: | :---: |
+| **Logistic Regression** (character TF-IDF) | **98.50%** | **98.85%** | **98.28%** | **98.55%** |
+
+This is the measured result from the previously run held-out split. Run the notebook to reproduce it. External validation on new labeled examples is needed before treating it as a production generalization estimate.
 
 ### Confusion Matrix
-The generated multi-class confusion matrix demonstrates near-zero cross-lingual leakage and sharp diagonal separation across all 28 classes:
-
-![Confusion Matrix](static/confusion_matrix.png)
+Run all notebook cells to inspect the held-out confusion matrix.
 
 ---
 
@@ -126,38 +124,16 @@ The generated multi-class confusion matrix demonstrates near-zero cross-lingual 
 
 ## 📁 Repository Structure
 
-```
+```text
 .
-├── app.py                      # Flask web application & REST API
-├── requirements.txt            # Project dependencies
-├── .gitignore                  # Git ignore rules
-├── README.md                   # Comprehensive project documentation
-├── data/
-│   ├── raw/                    # Raw corpora (22-lang & 17-lang datasets)
-│   └── processed/
-│       └── cleaned_dataset.csv # Unified preprocessed corpus (32k+ rows)
-├── models/
-│   ├── language_detector_pipeline.joblib  # Serialized production pipeline
-│   └── model_metadata.json     # Benchmark metrics & per-language scores
-├── notebooks/
-│   ├── language_detection_walkthrough.ipynb # Story-driven Jupyter walkthrough
-│   └── generate_notebook.py    # Script to regenerate walkthrough notebook
-├── src/
-│   ├── __init__.py
-│   ├── preprocess.py           # Text normalization, Unicode handling & cleaning
-│   ├── train.py                # Model training, comparison & serialization
-│   ├── evaluate.py             # Evaluation reports & error analysis
-│   └── predict.py              # Real-time inference & metadata provider
-├── static/
-│   ├── css/
-│   │   └── style.css           # Modern stylesheet (responsive, clean typography)
-│   ├── js/
-│   │   └── app.js              # Debounced live prediction & interactive controls
-│   └── confusion_matrix.png    # High-resolution heatmap
-├── templates/
-│   └── index.html              # Modern web UI template
-└── tests/
-    └── test_model.py           # Comprehensive unit tests (13 test cases)
+├── app.py                              # FastAPI backend
+├── requirements.txt
+├── data/processed/language_dataset.csv # Consolidated 28-class dataset
+├── models/language_detector_pipeline.joblib
+├── notebooks/language_detection.ipynb  # Complete ML workflow
+├── static/css/style.css
+├── static/js/app.js
+└── templates/index.html                # Static frontend page
 ```
 
 ---
@@ -187,21 +163,13 @@ pip install -r requirements.txt
 ```
 
 ### 4. (Optional) Retrain the Model
-The repository already contains the trained model in `models/language_detector_pipeline.joblib`. If you wish to retrain or experiment with new parameters:
-```bash
-python -m src.train
-```
+Run every cell in `notebooks/language_detection.ipynb` to preprocess, train, evaluate, and export the model artifact. The notebook is the source of truth for the ML workflow.
 
-### 5. Run Automated Tests
+### 5. Start the Web Application
 ```bash
-python -m unittest tests/test_model.py
+uvicorn app:app --reload
 ```
-
-### 6. Start the Web Application
-```bash
-python app.py
-```
-Open your browser and navigate to: **`http://localhost:5000`**
+Open **`http://127.0.0.1:8000`**. Run all cells in the notebook first to regenerate the model artifact.
 
 ---
 
@@ -213,7 +181,7 @@ Open your browser and navigate to: **`http://localhost:5000`**
 
 #### Request:
 ```bash
-curl -X POST http://localhost:5000/api/predict \
+curl -X POST http://127.0.0.1:8000/api/predict \
   -H "Content-Type: application/json" \
   -d '{"text": "Bonjour tout le monde, comment allez-vous aujourd hui?", "top_k": 3}'
 ```
@@ -272,7 +240,7 @@ git init
 git add .
 
 # 3. Create your initial commit
-git commit -m "feat: complete end-to-end language detection project with NLP, ML models, and Flask web app"
+git commit -m "feat: complete end-to-end language detection project with NLP, ML models, and FastAPI web app"
 
 # 4. Set main as the default branch
 git branch -M main

@@ -5,6 +5,29 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Populate the language directory from the FastAPI endpoint.
+  const languageGrid = document.getElementById("languagesCatalogGrid");
+  if (languageGrid) {
+    fetch("/api/languages").then((response) => response.json()).then((payload) => {
+      languageGrid.innerHTML = payload.languages.map((item) => `
+        <div class="lang-catalog-card" data-lang="${item.name.toLowerCase()}" data-script="" data-family="">
+          <div class="catalog-card-body"><div class="catalog-card-header">
+            <div class="catalog-flag">${item.flag}</div><div class="catalog-names">
+              <span class="catalog-title">${item.name} <span class="iso-code-pill">${item.code.toUpperCase()}</span></span>
+              <span class="catalog-native">${item.native}</span>
+            </div></div></div>
+          <button class="catalog-action-btn load-sample-btn" data-lang="${item.name}"><span>Test in Detector &rarr;</span></button>
+        </div>`).join("");
+      document.querySelectorAll(".load-sample-btn").forEach((button) => button.addEventListener("click", () => {
+        document.getElementById("textInput").focus();
+        document.querySelector('[data-tab="tab-detect"]')?.click();
+      }));
+      const total = payload.total_languages;
+      document.querySelectorAll('[data-family="all"]').forEach((button) => button.textContent = `All (${total})`);
+      const directoryTab = document.querySelector('#btn-tab-languages span');
+      if (directoryTab) directoryTab.textContent = `Languages Directory (${total})`;
+    }).catch(() => {});
+  }
   // =========================================================================
   // 1. Theme Management (Light / Dark)
   // =========================================================================
